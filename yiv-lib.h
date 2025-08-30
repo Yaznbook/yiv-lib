@@ -1,5 +1,5 @@
 /*****************************************************************************
- * yiv-lib.h: Yazan Image Viewer Library (C++ library)
+ * yiv-lib.h: Yaznbook Image Viewer Library (C++ library)
  *****************************************************************************
  * Author: Yazan
  * Description: High-quality image library for apps
