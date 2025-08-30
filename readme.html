@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YIV-Lib - Yaznbook Image Viewer Library</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; color: #333; }
+    header { background: #222; color: #fff; padding: 20px; text-align: center; }
+    main { max-width: 900px; margin: 20px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+    h1, h2, h3 { color: #222; }
+    pre { background: #eee; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    code { font-family: monospace; }
+    ul { line-height: 1.6; }
+    a { color: #1a73e8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>YIV-Lib</h1>
+    <p>High-Quality Image Library for C++ Apps</p>
+</header>
+
+<main>
+    <h2>Description</h2>
+    <p>YIV-Lib (Yaznbook Image Viewer Library) is a C++ library for loading, displaying, and processing high-resolution images. It supports all popular formats such as <strong>PNG, JPEG, BMP, GIF, TIFF, WebP, HEIF</strong> and provides features like filters, scaling, rotation, thumbnails, and thread-safe image lists.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li>Load single or multiple images</li>
+        <li>High-resolution image support</li>
+        <li>Rotate & scale images</li>
+        <li>Apply filters: grayscale, invert, brightness, contrast</li>
+        <li>Generate thumbnails</li>
+        <li>Partial image loading (lazy)</li>
+        <li>Alpha channel detection</li>
+        <li>Thread-safe ImageList operations</li>
+        <li>Format conversion / save (PNG, JPEG, BMP, TGA)</li>
+        <li>Metadata/EXIF support stub</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <ul>
+        <li>C++17 compatible compiler</li>
+        <li><code>stb_image.h</code> and <code>stb_image_write.h</code> (included or installed)</li>
+        <li>Optional: <code>&lt;thread&gt;</code> for multithreading support</li>
+    </ul>
+
+    <h2>Installation</h2>
+    <h3>1. Clone Repository</h3>
+    <pre><code>git clone https://github.com/YazanDev/yiv-lib.git
+cd yiv-lib</code></pre>
+
+    <h3>2. Add to Your Project</h3>
+    <p><strong>Option A: Include Header + Source</strong></p>
+    <ul>
+        <li>Copy <code>yiv-lib.h</code> and <code>yiv-lib.cpp</code> into your project</li>
+        <li>Include in your code: <code>#include "yiv-lib.h"</code></li>
+    </ul>
+
+    <p><strong>Option B: Build as Static/Shared Library</strong></p>
+    <pre><code>cmake_minimum_required(VERSION 3.10)
+project(yiv-lib)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_library(yiv-lib STATIC yiv-lib.cpp)
+target_include_directories(yiv-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})</code></pre>
+
+    <p>Build:</p>
+    <pre><code>mkdir build &amp;&amp; cd build
+cmake ..
+make</code></pre>
+
+    <h2>Usage Example</h2>
+    <pre><code>#include &lt;iostream&gt;
+#include "yiv-lib.h"
+
+int main() {
+    yiv::Image img;
+    if (!img.loadFromFile("example.png")) return 1;
+
+    img.applyFilter(yiv::FilterType::Grayscale);
+    img.rotateClockwise();
+    img.saveAs("example_out.png", yiv::ImageFormat::PNG);
+
+    yiv::ImageList list;
+    list.add(std::make_shared&lt;yiv::Image&gt;(img));
+    std::cout &lt;&lt; "ImageList contains " &lt;&lt; list.count() &lt;&lt; " image(s)." &lt;&lt; std::endl;
+    return 0;
+}</code></pre>
+
+    <h2>Building Your Program with YIV-Lib</h2>
+    <pre><code>g++ main.cpp yiv-lib.cpp -o MyApp -std=c++17 -lpthread
+./MyApp</code></pre>
+
+    <h2>Notes</h2>
+    <ul>
+        <li>Thread-safety implemented via <code>std::mutex</code> for ImageList</li>
+        <li>Large images may require more memory; use <code>loadPartial</code> or thumbnails</li>
+        <li>EXIF metadata parsing can be added later using libraries like <a href="https://libexif.github.io/">libexif</a></li>
+    </ul>
+
+</main>
+
+</body>
+</html>
